@@ -233,10 +233,10 @@ export default function Home() {
             className="flex gap-4 justify-center"
           >
             <a
-              href="#work"
+              href="https://akarsh-gupta.vercel.app"
               className="bg-primary text-primary-foreground px-8 py-3 rounded-full hover:opacity-90 transition"
             >
-              View Work
+              Developer Portfolio
             </a>
             <a
               href="#contact"

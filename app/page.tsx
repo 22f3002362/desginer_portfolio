@@ -166,42 +166,42 @@ const photographs = [
     title: "DragonFly",
     category: "Wildlife",
     image:
-      "images/photography/firefly.jpg",
+      "/images/photography/firefly.jpg",
   },
   {
     title: "Sky",
     category: "Nature",
     image:
-      "images/photography/sky1.jpg",
+      "/images/photography/sky1.jpg",
   },
   {
     title: "Sunset",
     category: "Street",
     image:
-      "images/photography/street.jpg",
+      "/images/photography/street.jpg",
   },
   {
     title: "Deer",
     category: "Wildlife",
     image:
-      "images/photography/deer2.jpg",
+      "/images/photography/deer2.jpg",
   },
   {
     title: "Evening Dawn",
     category: "Nature",
     image:
-      "images/photography/sky2.jpg",
+      "/images/photography/sky2.jpg",
   },
   {
     title: "A Happy Dog",
     category: "Wildlife",
     image:
-      "images/photography/smiledog.jpg",
+      "/images/photography/smiledog.jpg",
   },
   {
     title: "An Amazed Dog",
     category: "Wildlife",
-    image: "images/photography/dog.jpg",
+    image: "/images/photography/dog.jpg",
   }
 ];
 

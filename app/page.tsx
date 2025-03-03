@@ -260,7 +260,7 @@ export default function Home() {
               View Work
             </a>
             <a
-              href="https://akarsh-gupta.vercel.app"
+              href="https://akarsh-gupta.vercel.app" 
               className="bg-secondary text-secondary-foreground px-8 py-3 rounded-full hover:opacity-90 transition"
             >
               Developer Portfolio

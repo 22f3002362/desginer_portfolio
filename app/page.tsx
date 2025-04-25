@@ -1,13 +1,8 @@
 "use client";
 
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
-import { useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
+import {motion, useScroll, useTransform, AnimatePresence} from "framer-motion";
+import {useRef, useState, useEffect} from "react";
+import {useInView} from "react-intersection-observer";
 import {
   Palette,
   PenTool,
@@ -23,6 +18,7 @@ import {
   Facebook,
 } from "lucide-react";
 import Image from "next/image";
+import {X} from "lucide-react";
 
 const services = [
   {
@@ -159,57 +155,51 @@ const photographs = [
   {
     title: "Boat Nirvana ",
     category: "Product",
-    image:
-      "/images/photography/earphone.jpg",
+    image: "/images/photography/earphone.jpg",
   },
   {
     title: "DragonFly",
     category: "Wildlife",
-    image:
-      "/images/photography/firefly.jpg",
+    image: "/images/photography/firefly.jpg",
   },
   {
     title: "Sky",
     category: "Nature",
-    image:
-      "/images/photography/sky1.jpg",
+    image: "/images/photography/sky1.jpg",
   },
   {
     title: "Sunset",
     category: "Street",
-    image:
-      "/images/photography/street.jpg",
+    image: "/images/photography/street.jpg",
   },
   {
     title: "Deer",
     category: "Wildlife",
-    image:
-      "/images/photography/deer2.jpg",
+    image: "/images/photography/deer2.jpg",
   },
   {
     title: "Evening Dawn",
     category: "Nature",
-    image:
-      "/images/photography/sky2.jpg",
+    image: "/images/photography/sky2.jpg",
   },
   {
     title: "A Happy Dog",
     category: "Wildlife",
-    image:
-      "/images/photography/smiledog.jpg",
+    image: "/images/photography/smiledog.jpg",
   },
   {
     title: "An Amazed Dog",
     category: "Wildlife",
     image: "/images/photography/dog.jpg",
-  }
+  },
 ];
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedDesignCategory, setSelectedDesignCategory] = useState("All");
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
+  const {scrollYProgress} = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
@@ -231,14 +221,14 @@ export default function Home() {
     <div ref={containerRef} className="bg-background overflow-hidden">
       {/* Hero Section */}
       <motion.section
-        style={{ y, opacity }}
+        style={{y, opacity}}
         className="relative min-h-screen flex items-center justify-center py-20 px-4"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-background z-0" />
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.8}}
           className="relative z-10 text-center max-w-4xl mx-auto"
         >
           <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
@@ -248,9 +238,9 @@ export default function Home() {
             Graphic Designer and Photographer
           </p>
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{delay: 0.5}}
             className="flex gap-4 justify-center"
           >
             <a
@@ -260,7 +250,7 @@ export default function Home() {
               View Work
             </a>
             <a
-              href="https://akarsh-gupta.vercel.app" 
+              href="https://akarsh-gupta.vercel.app"
               className="bg-secondary text-secondary-foreground px-8 py-3 rounded-full hover:opacity-90 transition"
             >
               Developer Portfolio
@@ -273,9 +263,9 @@ export default function Home() {
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={{opacity: 0, y: 20}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true}}
             className="text-4xl font-bold text-center mb-16"
           >
             Hands-On Experience
@@ -292,9 +282,9 @@ export default function Home() {
       <section id="work" className="py-20 px-4 bg-muted">
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={{opacity: 0, y: 20}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true}}
             className="text-4xl font-bold text-center mb-16"
           >
             Featured Work
@@ -320,7 +310,12 @@ export default function Home() {
           >
             <AnimatePresence>
               {filteredProjects.map((project, index) => (
-                <ProjectCard key={project.title} {...project} index={index} />
+                <ProjectCard
+                  key={project.title}
+                  {...project}
+                  index={index}
+                  onClick={() => setPreviewImage(project.image)} // Pass the function
+                />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -331,9 +326,9 @@ export default function Home() {
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={{opacity: 0, y: 20}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true}}
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold mb-6">Photography</h2>
@@ -360,7 +355,12 @@ export default function Home() {
           >
             <AnimatePresence>
               {filteredPhotographs.map((photo, index) => (
-                <PhotographyCard key={photo.title} {...photo} index={index} />
+                <PhotographyCard
+                  key={photo.title}
+                  {...photo}
+                  index={index}
+                  onClick={() => setPreviewImage(photo.image)} // Pass the function
+                />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -371,9 +371,9 @@ export default function Home() {
       <section id="contact" className="py-20 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            initial={{opacity: 0, y: 20}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true}}
           >
             <h2 className="text-4xl font-bold mb-6">Start Your Project</h2>
             <p className="text-muted-foreground mb-8">
@@ -516,6 +516,15 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <AnimatePresence>
+        {previewImage && (
+          <PreviewModal
+            image={previewImage}
+            onClose={() => setPreviewImage(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -527,7 +536,7 @@ interface ServiceCardProps {
   index: number;
 }
 
-function ServiceCard({ icon, title, description, index }: ServiceCardProps) {
+function ServiceCard({icon, title, description, index}: ServiceCardProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -536,9 +545,9 @@ function ServiceCard({ icon, title, description, index }: ServiceCardProps) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{opacity: 0, y: 20}}
+      animate={inView ? {opacity: 1, y: 0} : {}}
+      transition={{duration: 0.5, delay: index * 0.1}}
       className="bg-card p-6 rounded-xl hover:shadow-lg transition-all duration-300"
     >
       <div className="mb-4 text-primary">{icon}</div>
@@ -554,6 +563,7 @@ interface ProjectCardProps {
   category: string;
   index: number;
   description: string;
+  onClick: () => void; // Add this prop
 }
 
 function ProjectCard({
@@ -562,6 +572,7 @@ function ProjectCard({
   category,
   index,
   description,
+  onClick, // Add this prop
 }: ProjectCardProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -571,56 +582,13 @@ function ProjectCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative aspect-square overflow-hidden rounded-xl bg-card"
-    >
-      <div className="relative w-full h-full">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
-      </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-        <span className="text-sm font-medium opacity-80">{category}</span>
-        <h3 className="text-xl font-bold">{title}</h3>
-        <p className="mt-2 text-sm opacity-90">{description}</p>
-      </div>
-    </motion.div>
-  );
-}
-
-interface PhotographyCardProps {
-  image: string;
-  title: string;
-  category: string;
-  index: number;
-}
-
-function PhotographyCard({
-  image,
-  title,
-  category,
-  index,
-}: PhotographyCardProps) {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{opacity: 0, scale: 0.9}}
+      animate={inView ? {opacity: 1, scale: 1} : {}}
+      exit={{opacity: 0, scale: 0.9}}
+      transition={{duration: 0.5, delay: index * 0.1}}
       layout
-      className="group relative aspect-[4/5] overflow-hidden rounded-xl bg-card"
+      className="group relative aspect-[4/5] overflow-hidden rounded-xl bg-card cursor-pointer"
+      onClick={onClick} // Use the passed function
     >
       <div className="relative w-full h-full">
         <Image
@@ -641,3 +609,105 @@ function PhotographyCard({
   );
 }
 
+interface PhotographyCardProps {
+  image: string;
+  title: string;
+  category: string;
+  index: number;
+  onClick: () => void; // Add this prop
+}
+
+function PhotographyCard({
+  image,
+  title,
+  category,
+  index,
+  onClick, // Add this prop
+}: PhotographyCardProps) {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{opacity: 0, scale: 0.9}}
+      animate={inView ? {opacity: 1, scale: 1} : {}}
+      exit={{opacity: 0, scale: 0.9}}
+      transition={{duration: 0.5, delay: index * 0.1}}
+      layout
+      className="group relative aspect-square overflow-hidden rounded-xl bg-card cursor-pointer"
+      onClick={onClick} // Use the passed function
+    >
+      <div className="relative w-full h-full">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+        <span className="inline-block px-3 py-1 bg-primary/80 rounded-full text-sm font-medium mb-2">
+          {category}
+        </span>
+        <h3 className="text-xl font-bold">{title}</h3>
+      </div>
+    </motion.div>
+  );
+}
+
+function PreviewModal({image, onClose}: {image: string; onClose: () => void}) {
+  // Close on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+      className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{scale: 0.9}}
+        animate={{scale: 1}}
+        exit={{scale: 0.9}}
+        className="relative max-h-[90vh] max-w-[90vw]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute -top-12 right-0 text-white hover:text-primary transition-colors"
+          aria-label="Close preview"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <div className="h-full w-full">
+          <Image
+            src={image}
+            alt="Preview"
+            className="rounded-lg object-contain max-h-[80vh]"
+            width={1200}
+            height={800}
+            style={{
+              width: "auto",
+              height: "auto",
+              maxWidth: "100%",
+              maxHeight: "80vh",
+            }}
+          />
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
